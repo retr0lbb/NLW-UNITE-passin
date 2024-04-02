@@ -4,7 +4,7 @@
   "description": "O pass.in é uma aplicação de gestão de eventos presenciais",
   "main": "src/server.js",
   "scripts": {
-    "start:dev": "tsx watch --env-file .env src/server.ts",
+    "start:dev": "tsx watch src/server.ts",
     "start:prod": "tsc && node ."
   },
   "keywords": [],
@@ -19,6 +19,7 @@
   "dependencies": {
     "@prisma/client": "^5.11.0",
     "fastify": "^4.26.2",
+    "fastify-type-provider-zod": "^1.1.9",
     "prisma": "^5.11.0",
     "zod": "^3.22.4"
   }
