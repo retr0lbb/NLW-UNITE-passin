@@ -4,7 +4,7 @@ import { prisma } from "../utils/prisma"
 import { FastifyInstance } from "fastify";
 
 
-export async function createEvent(app: FastifyInstance){
+export default async function createEvent(app: FastifyInstance){
     app
     .withTypeProvider<ZodTypeProvider>()
     .post("/events", {
