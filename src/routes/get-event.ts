@@ -24,37 +24,40 @@ export default async function getEvent(app:FastifyInstance) {
             }
         }
     }, async(request, reply) => {
-        
-        const { eventId } = request.params;
 
-        const event = await prisma.event.findUnique({
-            select: {
-                details: true,
-                title: true,
-                id: true,
-                maximunAtendees: true,
-                _count: {
-                    select: {
-                        attendees: true
+        try {
+            const { eventId } = request.params;
+
+            const event = await prisma.event.findUnique({
+                select: {
+                    details: true,
+                    title: true,
+                    id: true,
+                    maximunAtendees: true,
+                    _count: {
+                        select: {
+                            attendees: true
+                        }
                     }
+                },
+                where: {
+                    id: eventId
                 }
-            },
-            where: {
-                id: eventId
+            })
+            if(!event){
+                return reply.status(404).send({message: "Event Not Found"})
             }
-        })
-        if(!event){
-            return reply.status(404).send({message: "Event Not Found"})
+    
+    
+            return reply.send({ event: {
+                id: event.id,
+                title: event.title,
+                details: event.details,
+                maximunAttendees: event.maximunAtendees,
+                attendeesAmount: event._count.attendees
+            } })   
+        } catch (error) {
+            console.log(error)
         }
-
-
-        return reply.send({ event: {
-            id: event.id,
-            title: event.title,
-            details: event.details,
-            maximunAttendees: event.maximunAtendees,
-            attendeesAmount: event._count.attendees
-        } })
-
     })
 }
