@@ -7,23 +7,15 @@ export default async function getEvent( app:FastifyInstance ) {
     app
     .withTypeProvider<ZodTypeProvider>()
     .get("/events/:eventId", {
+
         schema: {
             params: z.object({
                 eventId: z.string().uuid()
-            }),
-            response: {
-                200: {
-                    event: z.object({
-                        id: z.string().uuid(),
-                        title: z.string(),
-                        details: z.string().nullable(),
-                        maximunAttendees: z.number().int().nullable(),
-                        attendeesAmount: z.number().nullable()
-                    })
-                }
-            }
+            })
         }
+       
     }, async(request, reply) => {
+        
 
         try {
             const { eventId } = request.params;
