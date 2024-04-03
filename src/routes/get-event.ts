@@ -3,7 +3,7 @@ import { ZodTypeProvider } from "fastify-type-provider-zod";
 import { z } from "zod"
 import { prisma } from "../utils/prisma";
 
-export default async function getEvent(app:FastifyInstance) {
+export default async function getEvent( app:FastifyInstance ) {
     app
     .withTypeProvider<ZodTypeProvider>()
     .get("/events/:eventId", {

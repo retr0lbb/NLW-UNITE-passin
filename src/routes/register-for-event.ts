@@ -3,7 +3,7 @@ import { ZodTypeProvider } from "fastify-type-provider-zod";
 import { z } from "zod"
 import { prisma } from "../utils/prisma";
 
-export  default async function registerForEvent(app: FastifyInstance) {
+export default async function registerForEvent(app: FastifyInstance) {
     app
      .withTypeProvider<ZodTypeProvider>()
      .post("/events/:eventId/attendees", {

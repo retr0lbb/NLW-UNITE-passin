@@ -59,7 +59,7 @@ export default async function getAttendeeBadge(app:FastifyInstance) {
                 email: attendee.email,
                 eventTitle: attendee.event.title,
                 checkInURL: checkInURL.toString()
-            } 
+            }
         })
     })
 }
