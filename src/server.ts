@@ -2,6 +2,7 @@ import fastify from "fastify";
 import fastifySwagger from "@fastify/swagger";
 import fastifySwaggerUi from "@fastify/swagger-ui";
 import { serializerCompiler, validatorCompiler, jsonSchemaTransform } from "fastify-type-provider-zod"
+import fastifyCors from "@fastify/cors";
 import {
     checkIn, 
     createEvent, 
@@ -12,9 +13,12 @@ import {
 } from "./routes"
 import { errorHandler } from "./utils/error-handling";
 
-
-
 const app = fastify()
+
+app.register(fastifyCors, {
+    origin: "*",
+
+})
 
 app.register(fastifySwagger, {
     swagger: {
@@ -49,7 +53,7 @@ app.get("/", async() => {
 })
 
 
-app.listen({ port: 3333 })
+app.listen({ port: 3333, host: "0.0.0.0" })
 .then(() => {
     console.log("server running at port 3333")
 })
