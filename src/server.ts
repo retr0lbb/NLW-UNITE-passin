@@ -1,16 +1,17 @@
 import fastify from "fastify";
-
 import fastifySwagger from "@fastify/swagger";
 import fastifySwaggerUi from "@fastify/swagger-ui";
-
 import { serializerCompiler, validatorCompiler, jsonSchemaTransform } from "fastify-type-provider-zod"
-import createEvent from "./routes/create-event";
-import registerForEvent from "./routes/register-for-event";
-import getEvent from "./routes/get-event";
-import getAttendeeBadge from "./routes/get-attendee-badge";
-import checkIn from "./routes/check-in";
-import getEventAttendees from "./routes/get-event-attendees";
+import {
+    checkIn, 
+    createEvent, 
+    getAttendeeBadge, 
+    getEvent, 
+    getEventAttendees, 
+    registerForEvent
+} from "./routes"
 import { errorHandler } from "./utils/error-handling";
+
 
 
 const app = fastify()
