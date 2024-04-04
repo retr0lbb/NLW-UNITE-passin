@@ -1,6 +1,6 @@
 import { FastifyInstance } from "fastify";
 import { ZodTypeProvider } from "fastify-type-provider-zod";
-import { z } from "zod"
+import { string, z } from "zod"
 import { prisma } from "../utils/prisma";
 
 export default async function getEvent( app:FastifyInstance ) {
@@ -11,7 +11,21 @@ export default async function getEvent( app:FastifyInstance ) {
         schema: {
             params: z.object({
                 eventId: z.string().uuid()
-            })
+            }),
+            response: {
+                200: z.object({
+                    event: z.object({
+                        id: z.string().uuid(),
+                        title: z.string(),
+                        details: z.string().nullable(),
+                        maximunAttendees: z.number().int().nullable(),
+                        attendeesAmount: z.number().int()
+                    })
+                }),
+                404: z.object({
+                    message: z.string()
+                })
+            }
         }
        
     }, async(request, reply) => {
