@@ -21,9 +21,6 @@ export default async function getAttendeeBadge(app:FastifyInstance) {
                         eventTitle: z.string(),
                         checkInURL: z.string().url()
                     })
-                }),
-                404: z.object({
-                    message: z.string()
                 })
             }
         }

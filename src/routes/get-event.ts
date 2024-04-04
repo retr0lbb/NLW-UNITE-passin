@@ -24,9 +24,6 @@ export default async function getEvent( app:FastifyInstance ) {
                         maximunAttendees: z.number().int().nullable(),
                         attendeesAmount: z.number().int()
                     })
-                }),
-                404: z.object({
-                    message: z.string()
                 })
             }
         }
