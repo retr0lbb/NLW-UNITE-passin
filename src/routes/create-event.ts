@@ -2,6 +2,7 @@ import { ZodTypeProvider } from "fastify-type-provider-zod";
 import {z} from "zod";
 import { prisma } from "../utils/prisma"
 import { FastifyInstance } from "fastify";
+import getSluged from "../utils/tools/get-sluged";
 
 
 export default async function createEvent(app: FastifyInstance){
@@ -31,13 +32,7 @@ export default async function createEvent(app: FastifyInstance){
             title 
         } = request.body;
         
-        const slug = title
-        .normalize("NFD")
-        .replace(/[\u0300-\u036f]/g, "")
-        .toLocaleLowerCase()
-        .replace(/[^\w\s-]/g, "")
-        .trim()
-        .replace(/\s+/g, "-")
+        const slug = getSluged(title)
 
 
         const eventWithTheSameSlug = await prisma.event.findUnique({
