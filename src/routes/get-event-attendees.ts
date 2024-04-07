@@ -39,17 +39,15 @@ export default async function getEventAttendees( app:FastifyInstance ) {
         const { pageIndex, query } = request.query;
 
         const [eventAttendees, attendees] = await Promise.all([
-            prisma.event.findUnique({
-                where: {
-                    id: eventId
+            prisma.attendee.count({
+                where: query ? {
+                  eventId,
+                  name: {
+                    contains: query,
+                  }
+                } : {
+                  eventId,
                 },
-                select: {
-                    _count: {
-                        select: {
-                            attendees: true
-                        }
-                    }
-                }
             }),
             prisma.attendee.findMany({
                 select: {
@@ -89,7 +87,7 @@ export default async function getEventAttendees( app:FastifyInstance ) {
                     checkedInAt: attendee.checkIn?.createdAt ?? null
                 }
             })),
-            attendeesAmount: eventAttendees?._count.attendees ? eventAttendees?._count.attendees : 0
+            attendeesAmount: eventAttendees
          })
     })
 }
