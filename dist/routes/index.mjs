@@ -11,7 +11,7 @@ import {
 } from "../chunk-O75VA6VT.mjs";
 import {
   getEventAttendees
-} from "../chunk-4WTNSYQU.mjs";
+} from "../chunk-ULS6HML3.mjs";
 import {
   getEvent
 } from "../chunk-US2CHGF3.mjs";
