@@ -28,7 +28,8 @@ export default async function getEventAttendees( app:FastifyInstance ) {
                             createdAt: z.date(),
                             checkedInAt: z.date().nullable()
                         })
-                    )
+                    ),
+                    attendeesAmount: z.number()
                 })
             },
         }
@@ -37,32 +38,46 @@ export default async function getEventAttendees( app:FastifyInstance ) {
         const { eventId } = request.params;
         const { pageIndex, query } = request.query;
 
-        const attendees = await prisma.attendee.findMany({
-            select: {
-                id: true,
-                name: true,
-                email: true,
-                createdAt: true,
-                checkIn: {
-                    select: {
-                        createdAt: true
+        const [eventAttendees, attendees] = await Promise.all([
+            prisma.event.findUnique({
+                where: {
+                    id: eventId
+                },
+                select: {
+                    _count: {
+                        select: {
+                            attendees: true
+                        }
                     }
                 }
-            },
-            where: query? {
-                eventId,
-                name: {
-                    contains: query
+            }),
+            prisma.attendee.findMany({
+                select: {
+                    id: true,
+                    name: true,
+                    email: true,
+                    createdAt: true,
+                    checkIn: {
+                        select: {
+                            createdAt: true
+                        }
+                    },
+                },
+                where: query? {
+                    eventId,
+                    name: {
+                        contains: query
+                    }
+                } : {
+                    eventId,
+                },
+                take: 10,
+                skip: pageIndex * 10,
+                orderBy: {
+                    createdAt: "desc"
                 }
-            } : {
-                eventId,
-            },
-            take: 10,
-            skip: pageIndex * 10,
-            orderBy: {
-                createdAt: "desc"
-            }
-        })
+            })
+        ])
 
         return reply.send({ 
             attendees: attendees.map((attendee => {
@@ -73,7 +88,8 @@ export default async function getEventAttendees( app:FastifyInstance ) {
                     createdAt: attendee.createdAt,
                     checkedInAt: attendee.checkIn?.createdAt ?? null
                 }
-            }))
+            })),
+            attendeesAmount: eventAttendees?._count.attendees ? eventAttendees?._count.attendees : 0
          })
     })
 }
