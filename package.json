@@ -4,7 +4,7 @@
   "description": "O pass.in é uma aplicação de gestão de eventos presenciais",
   "main": "src/server.js",
   "scripts": {
-    "start:dev": "tsx watch src/server.ts",
+    "dev": "tsx watch src/server.ts",
     "start": "node dist/server.mjs",
     "db:migrate": "prisma migrate dev",
     "db:studio": "prisma studio",
