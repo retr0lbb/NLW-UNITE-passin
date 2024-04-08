@@ -24,6 +24,7 @@ O systema fara um scan da credencial do participante para emitir a entrada do ev
 - [] O participante só pode se inscrever no evento 1 vez com um email.
 - [] O participante só pode se increver em um evento com vagas disponiveis.
 - [] O participante só pode realizar o checkin do evento 1 unica vez.
+- [] O participante só pode realizar a inscrição do evento até um determinado tempo antes do evento.
 
 ### Requisitos não funcionais
 

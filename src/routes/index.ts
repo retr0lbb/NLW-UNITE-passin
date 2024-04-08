@@ -4,6 +4,7 @@ import getAttendeeBadge from "./get-attendee-badge"
 import getEvent from "./get-event"
 import getEventAttendees from "./get-event-attendees"
 import registerForEvent from "./register-for-event"
+import deletEvent from "./delete-event"
 
 export {
     checkIn,
@@ -12,5 +13,6 @@ export {
     getEvent,
     getEventAttendees,
     registerForEvent,
-    
+    deletEvent
+     
 }

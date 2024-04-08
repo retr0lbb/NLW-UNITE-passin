@@ -6,6 +6,7 @@ import fastifyCors from "@fastify/cors";
 import {
     checkIn, 
     createEvent, 
+    deletEvent, 
     getAttendeeBadge, 
     getEvent, 
     getEventAttendees, 
@@ -45,6 +46,7 @@ app.register(getEvent)
 app.register(getAttendeeBadge)
 app.register(checkIn)
 app.register(getEventAttendees)
+app.register(deletEvent)
 
 app.setErrorHandler(errorHandler)
 

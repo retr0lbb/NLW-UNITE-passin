@@ -16,7 +16,9 @@ export default async function createEvent(app: FastifyInstance){
             body: z.object({
                 title: z.string().min(5),
                 details: z.string().nullable(),
-                maximunAtendees: z.number().int().positive().nullable()
+                maximunAtendees: z.number().int().positive().nullable(),
+                eventDate: z.string(),
+                limitDateToSubscribe: z.string()
             }),
 
             response: {
@@ -32,8 +34,23 @@ export default async function createEvent(app: FastifyInstance){
         const { 
             details, 
             maximunAtendees, 
-            title 
+            title,
+            eventDate,
+            limitDateToSubscribe
         } = request.body;
+
+        const dateEventDate = new Date(eventDate)
+        const datelimitDateToSubscribe = new Date(limitDateToSubscribe)
+
+        if(dateEventDate < datelimitDateToSubscribe){
+            throw new BadRequest("Limit date do subscribe cannot be greater them event date")
+        }
+        if(dateEventDate < new Date()){
+            throw new BadRequest("Event Date cannot be in the past")
+        }
+        if(datelimitDateToSubscribe < new Date()){
+            throw new BadRequest("Limit Date for subscription cannot be in the past")
+        }
         
         const slug = getSluged(title)
 
@@ -53,7 +70,9 @@ export default async function createEvent(app: FastifyInstance){
                 title,
                 details,
                 maximunAtendees,
-                slug
+                slug,
+                eventDate: dateEventDate,
+                limitDateToSubscribe: datelimitDateToSubscribe
             }
         })        
         return reply.status(201).send({message: "Event created with sucess", eventId: event.id})

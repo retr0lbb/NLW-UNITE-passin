@@ -11,12 +11,14 @@ datasource db {
 }
 
 model Event {
-  id              String     @id @default(uuid())
-  title           String
-  details         String?
-  slug            String     @unique
-  maximunAtendees Int?       @map("maximun_atendees")
-  attendees       Attendee[]
+  id                   String     @id @default(uuid())
+  title                String
+  details              String?
+  slug                 String     @unique
+  maximunAtendees      Int?       @map("maximun_atendees")
+  eventDate            DateTime   @map("event_date")
+  limitDateToSubscribe DateTime   @map("limit_to_subscribe")
+  attendees            Attendee[]
 
   @@map("events")
 }
