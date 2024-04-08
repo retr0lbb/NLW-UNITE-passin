@@ -1,26 +1,29 @@
 import {
   errorHandler
 } from "./chunk-SD2OABSU.mjs";
-import "./chunk-3URWXKJX.mjs";
+import "./chunk-SV6FI4MD.mjs";
+import {
+  registerForEvent
+} from "./chunk-HDNDPVHD.mjs";
 import {
   checkIn
 } from "./chunk-CULOND5S.mjs";
 import {
   createEvent
-} from "./chunk-6HJ5SYEO.mjs";
+} from "./chunk-ISXJODSP.mjs";
 import "./chunk-UDEVG7DK.mjs";
 import {
+  deletEvent
+} from "./chunk-FZNNY3M2.mjs";
+import {
   getAttendeeBadge
-} from "./chunk-O75VA6VT.mjs";
+} from "./chunk-S3EEM54A.mjs";
 import {
   getEventAttendees
 } from "./chunk-HYO4XBM4.mjs";
 import {
   getEvent
 } from "./chunk-US2CHGF3.mjs";
-import {
-  registerForEvent
-} from "./chunk-ZWL7DUUM.mjs";
 import "./chunk-JRO4E4TH.mjs";
 import "./chunk-X7DEMKN4.mjs";
 
@@ -57,6 +60,7 @@ app.register(getEvent);
 app.register(getAttendeeBadge);
 app.register(checkIn);
 app.register(getEventAttendees);
+app.register(deletEvent);
 app.setErrorHandler(errorHandler);
 app.get("/", async () => {
   return "Welcome to my api";
