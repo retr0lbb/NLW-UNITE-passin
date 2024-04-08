@@ -1,6 +1,6 @@
 # pass.in - nlw
 
-![image](https://github.com/retr0lbb/NLW-UNITE-passin/assets/85702153/e172aba8-af5f-4e61-aa30-0f1a2d2a5c14)j
+![image](https://github.com/retr0lbb/NLW-UNITE-passin/assets/85702153/e172aba8-af5f-4e61-aa30-0f1a2d2a5c14)
 
 O pass.in é um sistema de **gerenciamento de participantes em eventos presenciais**.
 
