@@ -61,6 +61,11 @@ export default async function registerForEvent(app: FastifyInstance) {
         if(event?.maximunAtendees &&  maximumAmountOfAttendeesInAEvent >= event?.maximunAtendees){
             throw new BadRequest("Maximum number of attendees for this event reached")
         }
+        if(event?.limitDateToSubscribe){
+            if(event.limitDateToSubscribe < new Date()){
+                throw new BadRequest("The deadline for registration for this event has already passed.")
+            }
+        }
 
         const attendee = await prisma.attendee.create({
             data:{
