@@ -10,8 +10,11 @@ export default async function deletEvent(app: FastifyInstance) {
         schema: {
             params: z.object({
                 eventId: z.string().uuid()
-            })
+            }),
+            summary: "deletes an event",
+            tags: ["events"]
         }
+    
     }, async(request, reply) => {
         const { eventId } = request.params
         try {

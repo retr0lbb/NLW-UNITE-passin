@@ -1,6 +1,6 @@
 import { FastifyInstance } from "fastify";
 import { ZodTypeProvider } from "fastify-type-provider-zod";
-import { number, z } from "zod";
+import { z } from "zod";
 import { prisma } from "../utils/prisma";
 import { BadRequest } from "./_errors/bad-request";
 
@@ -20,7 +20,8 @@ export default async function getAttendeeBadge(app:FastifyInstance) {
                         name: z.string(),
                         email: z.string().email(),
                         eventTitle: z.string(),
-                        checkInURL: z.string().url()
+                        checkInURL: z.string().url(),
+                        eventDate: z.date()
                     })
                 })
             }
@@ -38,7 +39,8 @@ export default async function getAttendeeBadge(app:FastifyInstance) {
                     select: {
                         title: true,
                         details: true,
-                        id: true
+                        id: true,
+                        eventDate: true
                     }
                 }
             },
@@ -60,7 +62,8 @@ export default async function getAttendeeBadge(app:FastifyInstance) {
                 name: attendee.name,
                 email: attendee.email,
                 eventTitle: attendee.event.title,
-                checkInURL: checkInURL.toString()
+                checkInURL: checkInURL.toString(),
+                eventDate: attendee.event.eventDate
             }
         })
     })

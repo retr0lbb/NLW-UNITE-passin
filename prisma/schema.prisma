@@ -18,6 +18,7 @@ model Event {
   maximunAtendees      Int?       @map("maximun_atendees")
   eventDate            DateTime   @map("event_date")
   limitDateToSubscribe DateTime   @map("limit_to_subscribe")
+  ticketPrice          Decimal?   @default(0.00)
   attendees            Attendee[]
 
   @@map("events")
