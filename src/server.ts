@@ -14,6 +14,8 @@ import {
 } from "./routes"
 import { errorHandler } from "./utils/error-handling";
 
+
+
 const app = fastify()
 
 app.register(fastifyCors, {
