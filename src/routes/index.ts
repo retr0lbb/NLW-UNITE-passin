@@ -1,10 +1,10 @@
 import checkIn from "./check-in"
-import createEvent from "./create-event"
-import getAttendeeBadge from "./get-attendee-badge"
-import getEvent from "./get-event"
-import getEventAttendees from "./get-event-attendees"
-import registerForEvent from "./register-for-event"
-import deletEvent from "./delete-event"
+import createEvent from "./event/create-event"
+import getAttendeeBadge from "./attendee/get-attendee-badge"
+import getEvent from "./event/get-event"
+import getEventAttendees from "./event/get-event-attendees"
+import registerForEvent from "./attendee/register-for-event"
+import deletEvent from "./event/delete-event"
 
 export {
     checkIn,

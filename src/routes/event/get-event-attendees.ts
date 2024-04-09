@@ -1,7 +1,7 @@
 import { FastifyInstance } from "fastify";
 import { ZodTypeProvider } from "fastify-type-provider-zod";
 import { z } from "zod"
-import { prisma } from "../utils/prisma";
+import { prisma } from "../../utils/prisma";
 
 export default async function getEventAttendees( app:FastifyInstance ) {
     app
