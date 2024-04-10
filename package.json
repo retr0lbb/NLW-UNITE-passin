@@ -34,6 +34,7 @@
     "dotenv": "^16.4.5",
     "fastify": "^4.26.2",
     "fastify-type-provider-zod": "^1.1.9",
+    "jsonwebtoken": "^9.0.2",
     "nodemailer": "^6.9.13",
     "prisma": "^5.11.0",
     "zod": "^3.22.4"
