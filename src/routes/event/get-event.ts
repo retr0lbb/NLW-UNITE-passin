@@ -40,6 +40,7 @@ export default async function getEvent( app:FastifyInstance ) {
                     title: true,
                     id: true,
                     maximunAtendees: true,
+                    eventDate: true,
                     _count: {
                         select: {
                             attendees: true

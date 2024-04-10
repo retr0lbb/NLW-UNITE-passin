@@ -30,58 +30,65 @@ export default async function registerForEvent(app: FastifyInstance) {
         const { eventId } = request.params;
         const { email, name } = request.body;
 
-        const attendeeFromEmail = await prisma.attendee.findUnique({
-            where:{ 
-                eventId_email: {
-                    email,
-                    eventId
+      
+            const attendeeFromEmail = await prisma.attendee.findUnique({
+                where:{ 
+                    eventId_email: {
+                        email,
+                        eventId
+                    }
                 }
+            })
+    
+            if(attendeeFromEmail !== null){
+                throw new BadRequest("Email already register on this event")
             }
-        })
-
-        if(attendeeFromEmail !== null){
-            throw new BadRequest("Email already register on this event")
-        }
-
-       const [event, maximumAmountOfAttendeesInAEvent] = await Promise.all([
-            prisma.event.findUnique({
-                where: {
-                    id: eventId
-                }
-            }),
-
-            prisma.attendee.count({
-                where: {
+    
+           const [event, maximumAmountOfAttendeesInAEvent] = await Promise.all([
+                prisma.event.findUnique({
+                    where: {
+                        id: eventId
+                    }
+                }),
+    
+                prisma.attendee.count({
+                    where: {
+                        eventId
+                    }
+                })
+    
+            ])
+    
+    
+            if(event?.maximunAtendees &&  maximumAmountOfAttendeesInAEvent >= event?.maximunAtendees){
+                throw new BadRequest("Maximum number of attendees for this event reached")
+            }
+    
+            if(event?.limitDateToSubscribe && event?.limitDateToSubscribe < new Date()){
+                throw new BadRequest("The deadline for registration for this event has already passed.")
+            }
+    
+            const attendee = await prisma.attendee.create({
+                data:{
+                    email,
+                    name,
                     eventId
                 }
             })
-
-        ])
-
-
-        if(event?.maximunAtendees &&  maximumAmountOfAttendeesInAEvent >= event?.maximunAtendees){
-            throw new BadRequest("Maximum number of attendees for this event reached")
-        }
-
-        if(event?.limitDateToSubscribe && event?.limitDateToSubscribe < new Date()){
-            throw new BadRequest("The deadline for registration for this event has already passed.")
-        }
-
-        const attendee = await prisma.attendee.create({
-            data:{
-                email,
-                name,
-                eventId
-            }
-        })
-
-        await sendEmail({
+    
+            
+        sendEmail({
             reciver: attendee.email, 
             subject: `${event?.title} Inscrição confirmada`,
             text: `${attendee.name} Sua inscrição para o evento ${event?.title} foi confirmada.`,
             html: ""
+        }).then((email) => {
+            console.log("email sended witdh sucess")
+            console.log(email)
+        }).catch(err => {
+            throw new Error(err)
         })
-
+             
         return reply.status(201).send({message: "Attendee inserted In a event with Sucess", attendeeId: attendee.id})
     })
 
