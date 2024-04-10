@@ -5,7 +5,6 @@ import { FastifyInstance } from "fastify";
 import getSluged from "../../utils/tools/get-sluged";
 import { BadRequest } from "../_errors/bad-request";
 
-
 export default async function createEvent(app: FastifyInstance){
     app
     .withTypeProvider<ZodTypeProvider>()
@@ -51,7 +50,6 @@ export default async function createEvent(app: FastifyInstance){
         if(datelimitDateToSubscribe < new Date()){
             throw new BadRequest("Limit Date for subscription cannot be in the past")
         }
-        
         const slug = getSluged(title)
 
 
