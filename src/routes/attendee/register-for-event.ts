@@ -3,6 +3,7 @@ import { ZodTypeProvider } from "fastify-type-provider-zod";
 import { z } from "zod"
 import { prisma } from "../../utils/prisma";
 import { BadRequest } from "../_errors/bad-request";
+import { sendEmail } from "../../utils/mailer";
 
 export default async function registerForEvent(app: FastifyInstance) {
     app
@@ -74,7 +75,14 @@ export default async function registerForEvent(app: FastifyInstance) {
             }
         })
 
+        await sendEmail({
+            reciver: attendee.email, 
+            subject: `${event?.title} Inscrição confirmada`,
+            text: `${attendee.name} Sua inscrição para o evento ${event?.title} foi confirmada.`,
+            html: ""
+        })
+
         return reply.status(201).send({message: "Attendee inserted In a event with Sucess", attendeeId: attendee.id})
-     })
+    })
 
 }

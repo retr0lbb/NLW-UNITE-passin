@@ -31,6 +31,8 @@ export async function sendEmail({reciver, subject, ...rest}: EmailConfiguration)
             subject,
             ...rest
         });
+
+        transporter.close()
         if(!info){
             return "Email not founded"
         }
